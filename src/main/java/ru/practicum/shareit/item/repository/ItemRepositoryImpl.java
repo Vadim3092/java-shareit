@@ -29,15 +29,19 @@ public class ItemRepositoryImpl implements ItemRepository {
     public Item update(Item item) {
         if (item.getId() != null && items.containsKey(item.getId())) {
             Item existingItem = items.get(item.getId());
-            if (item.getName() != null) {
+
+            if (item.getName() != null && !item.getName().trim().isEmpty()) {
                 existingItem.setName(item.getName());
             }
-            if (item.getDescription() != null) {
+
+            if (item.getDescription() != null && !item.getDescription().trim().isEmpty()) {
                 existingItem.setDescription(item.getDescription());
             }
+
             if (item.getAvailable() != null) {
                 existingItem.setAvailable(item.getAvailable());
             }
+
             items.put(item.getId(), existingItem);
             return existingItem;
         }
