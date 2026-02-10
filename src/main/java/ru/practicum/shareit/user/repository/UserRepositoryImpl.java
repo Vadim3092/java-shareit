@@ -56,6 +56,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return users.containsKey(id);
+    }
+
+    @Override
     public List<User> findAll() {
         return new ArrayList<>(users.values());
     }

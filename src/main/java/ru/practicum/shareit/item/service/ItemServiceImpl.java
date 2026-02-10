@@ -22,8 +22,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto create(ItemDto itemDto, Long userId) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с id=" + userId + " не найден"));
+        if (!userRepository.existsById(userId)) {
+            throw new NotFoundException("Пользователь с id=" + userId + " не найден");
+        }
 
         validateItem(itemDto, true);
 
@@ -58,8 +59,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> getAllByOwner(Long ownerId) {
-        userRepository.findById(ownerId)
-                .orElseThrow(() -> new NotFoundException("Пользователь с id=" + ownerId + " не найден"));
+        if (!userRepository.existsById(ownerId)) {
+            throw new NotFoundException("Пользователь с id=" + ownerId + " не найден");
+        }
 
         return itemRepository.findAllByOwner(ownerId).stream()
                 .map(ItemMapper::toItemDto)
