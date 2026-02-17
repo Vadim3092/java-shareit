@@ -3,6 +3,8 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
+import ru.practicum.shareit.item.dto.ItemBookingDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
 
@@ -34,12 +36,19 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
-        return itemService.getAllByOwner(userId);
+    public List<ItemBookingDto> getAllByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
+        return itemService.getAllByOwnerWithBooking(userId);
     }
 
     @GetMapping("/search")
     public List<ItemDto> search(@RequestParam String text) {
         return itemService.search(text);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentDto addComment(@RequestHeader("X-Sharer-User-Id") Long userId,
+                                 @PathVariable Long itemId,
+                                 @RequestBody ru.practicum.shareit.item.dto.CommentRequestDto commentDto) {
+        return itemService.addComment(userId, itemId, commentDto.getText());
     }
 }
