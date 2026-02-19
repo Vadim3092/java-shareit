@@ -3,10 +3,11 @@ package ru.practicum.shareit.user.model;
 import lombok.*;
 import jakarta.persistence.*;
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class User {

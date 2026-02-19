@@ -6,10 +6,11 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "items")
 public class Item {
@@ -33,7 +34,6 @@ public class Item {
     private Long requestId;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @ToString.Exclude
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 }
