@@ -174,8 +174,8 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Вещь с id=" + itemId + " не найдена"));
 
-        boolean hasBooked = bookingRepository.existsByBookerIdAndItemIdAndStatus(
-                userId, itemId, BookingStatus.APPROVED);
+        boolean hasBooked = bookingRepository.existsByBookerIdAndItemIdAndStatusAndEndBefore(
+                userId, itemId, BookingStatus.APPROVED, LocalDateTime.now());
 
         if (!hasBooked) {
             throw new ValidationException("Пользователь не брал эту вещь в аренду");
